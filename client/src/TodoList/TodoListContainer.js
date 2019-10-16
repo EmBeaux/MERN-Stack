@@ -9,7 +9,7 @@ class App extends Component {
   };
 
   async componentDidMount() {
-    this.getCurrentUser();
+    // this.getCurrentUser();
     this.getTodoList();
   }
 

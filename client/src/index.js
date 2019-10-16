@@ -11,7 +11,7 @@ const routing = (
     <Switch>
       <Route exact path="/" component={TodoListContainer} />
       <Route exact path="/register" component={Register} />
-      <Route exact path="/login" component={Login} />
+      <Route exact path="/signin" component={Login} />
     </Switch>
   </Router>
 );

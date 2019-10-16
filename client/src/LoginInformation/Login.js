@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import setAuthToken from "../utils/SetAuthToken"
 
 class Login extends Component {
   constructor() {
@@ -15,13 +15,16 @@ class Login extends Component {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  createUser = () => {
-    axios.post("http://localhost:3001/api/users", {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.passwordConfirmation
-    });
+  loginUser = () => {
+    debugger
+    axios
+      .post("/api/signin", {email: this.state.email, password: this.state.password})
+      .then(res => {
+        const { token } = res.data;
+        // Set token to Auth header
+        setAuthToken(token);
+        console.log(token)
+      })
   };
   render() {
     return (
@@ -33,12 +36,12 @@ class Login extends Component {
           </p>
         </div>
         <form
-          onSubmit={e => {
-            e.preventDefaut();
-            this.createUser();
+          onSubmit={(e) => {
+            e.preventDefault();
+            this.loginUser();
           }}
         >
-          <div style={{display: "flex", flexDirection: "column"}}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
             <input
               onChange={this.onChange}
               value={this.state.email}
@@ -60,14 +63,7 @@ class Login extends Component {
           </div>
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
             <button
-              style={{
-                width: "150px",
-                borderRadius: "3px",
-                letterSpacing: "1.5px",
-                marginTop: "1rem"
-              }}
               type="submit"
-              className="btn btn-large waves-effect waves-light hoverable blue accent-3"
             >
               Login
             </button>

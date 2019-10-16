@@ -38,7 +38,7 @@ class Login extends Component {
             this.createUser();
           }}
         >
-          <div className="input-field col s12">
+          <div style={{display: "flex", flexDirection: "column"}}>
             <input
               onChange={this.onChange}
               value={this.state.email}

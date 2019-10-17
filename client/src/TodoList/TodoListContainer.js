@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   getTodoList = () => {
-    fetch("http://localhost:3001/api/todoList")
+    fetch(`http://localhost:3001/api/todoList?token=${localStorage.token}`)
       .then(data => data.json())
       .then(res => this.setState({ todoList: res.data }));
   };
@@ -22,7 +22,8 @@ class App extends Component {
     axios
       .post("http://localhost:3001/api/todoItem", {
         message: message,
-        dueDate: dueDate
+        dueDate: dueDate,
+        token: localStorage.token
       })
       .then(res => {
         this.setState({

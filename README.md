@@ -1,9 +1,9 @@
-#MERN-Stack
+# MERN-Stack
 This is a MERN Stack Coding Practice
 
 This application is used to keep track of a todo list. It has full user authentication and it has CRUD functionality for the todo List.
 
-#Steps to Pull Down locally
+# Steps to Pull Down locally
 
 - Clone the branch through git (https://github.com/EmBeaux/MERN-Stack.git)
 - run yarn install

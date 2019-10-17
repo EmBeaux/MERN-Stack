@@ -67,7 +67,9 @@ class Login extends Component {
               style={{ width: "200px" }}
             />
           </div>
-          <button type="submit" style={{marginTop: "4px"}}>Login</button>
+          <button type="submit" style={{ marginTop: "4px" }}>
+            Login
+          </button>
         </form>
       </div>
     );

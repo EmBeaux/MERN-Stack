@@ -5,16 +5,16 @@ const keys = require("../config/keys");
 
 createTodoItem = (req, res) => {
   const body = req.body;
-  console.log(req.body.token)
-  const user = jwt.decode(req.body.token.split(" ")[1], keys.secretOrKey)
-  console.log(user)
+  console.log(req.body.token);
+  const user = jwt.decode(req.body.token.split(" ")[1], keys.secretOrKey);
+  console.log(user);
 
-  body.user_id = user.id
-  delete body.token
+  body.user_id = user.id;
+  delete body.token;
 
-  console.log(body)
+  console.log(body);
 
-  if (!body || !body.message || !body.dueDate && !body.user_id) {
+  if (!body || !body.message || (!body.dueDate && !body.user_id)) {
     return res.status(400).json({
       success: false,
       error: "You must provide a message and due date"
@@ -27,7 +27,7 @@ createTodoItem = (req, res) => {
     return res.status(400).json({ success: false, error: err });
   }
 
-  console.log(todoItem)
+  console.log(todoItem);
 
   todoItem
     .save()
@@ -46,9 +46,9 @@ createTodoItem = (req, res) => {
 };
 
 getTodoList = async (req, res) => {
-  const user = jwt.decode(req.query.token.split(" ")[1], keys.secretOrKey)
+  const user = jwt.decode(req.query.token.split(" ")[1], keys.secretOrKey);
 
-  await TodoItem.find({user_id: user.id}, (err, todoItems) => {
+  await TodoItem.find({ user_id: user.id }, (err, todoItems) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
@@ -58,7 +58,7 @@ getTodoList = async (req, res) => {
 };
 
 deleteTodoItem = async (req, res) => {
-  await TodoItem.findOneAndDelete({ _id: req.params.id }, (err) => {
+  await TodoItem.findOneAndDelete({ _id: req.params.id }, err => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }

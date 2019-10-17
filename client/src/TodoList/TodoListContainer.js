@@ -27,20 +27,22 @@ class App extends Component {
       .then(res => {
         this.setState({
           todoList: this.state.todoList.concat(res.data.todoItem),
-          message: undefined,
-          dueDate: undefined
+          message: "",
+          dueDate: ""
         });
       });
   };
 
-  deleteTodoItem = (todoItem) => {
+  deleteTodoItem = todoItem => {
     axios
       .delete(`http://localhost:3001/api/todoItem/${todoItem._id}`, {
         todoItem: todoItem
       })
       .then(res => {
         this.setState({
-          todoList: this.state.todoList.filter(item => item._id !== todoItem._id)
+          todoList: this.state.todoList.filter(
+            item => item._id !== todoItem._id
+          )
         });
       });
   };
@@ -51,8 +53,10 @@ class App extends Component {
     return (
       <div>
         <div style={{ marginLeft: "4px" }}>
-          <h1>Task List</h1>
-          <TodoListDisplay todoList={todoList} deleteTodoItem={this.deleteTodoItem} />
+          <TodoListDisplay
+            todoList={todoList}
+            deleteTodoItem={this.deleteTodoItem}
+          />
         </div>
         <form
           style={{ padding: "10px" }}
@@ -66,28 +70,31 @@ class App extends Component {
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
-              width: "325px"
+              width: "400px",
+              margin: "0 auto"
             }}
           >
             <TodoListInput
               type="text"
               onChange={e => this.setState({ message: e.target.value })}
+              value={this.state.message}
               placeholder="Add Message for Task"
             />
             <TodoListInput
               type="date"
+              value={this.state.dueDate}
               onChange={e => this.setState({ dueDate: e.target.value })}
               placeholder="Add Due Date for Task"
-              width="100px"
+              width="115px"
             />
+            <button
+              type="submit"
+              style={{ marginTop: "4px" }}
+              disabled={!(this.state.dueDate && this.state.message)}
+            >
+              ADD
+            </button>
           </div>
-          <button
-            type="submit"
-            style={{ marginTop: "4px" }}
-            disabled={!(this.state.dueDate && this.state.message)}
-          >
-            ADD
-          </button>
         </form>
       </div>
     );

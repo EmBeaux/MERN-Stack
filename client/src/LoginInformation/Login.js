@@ -13,7 +13,7 @@ class Login extends Component {
 
   onChange(e) {
     this.setState({ [e.target.id]: e.target.value });
-  };
+  }
 
   loginUser() {
     axios
@@ -25,12 +25,19 @@ class Login extends Component {
         const { token } = res.data;
         setAuthToken(token);
       });
-  };
+  }
 
   render() {
     return (
-      <div>
-        <div style={{ paddingLeft: "12px" }}>
+      <div
+        style={{
+          maxWidth: "400px",
+          padding: "80px 80px",
+          margin: "200px auto",
+          background: "#ebf1f6"
+        }}
+      >
+        <div>
           <h4>Login below</h4>
           <p>
             Don't have an account? <Link to="/register">Register</Link>
@@ -45,7 +52,7 @@ class Login extends Component {
           <div style={{ display: "flex", flexDirection: "column" }}>
             <label htmlFor="email">Email</label>
             <input
-              onChange={(e) => this.onChange(e)}
+              onChange={e => this.onChange(e)}
               value={this.state.email}
               id="email"
               type="email"
@@ -53,16 +60,14 @@ class Login extends Component {
             />
             <label htmlFor="password">Password</label>
             <input
-              onChange={(e) => this.onChange(e)}
+              onChange={e => this.onChange(e)}
               value={this.state.password}
               id="password"
               type="password"
               style={{ width: "200px" }}
             />
           </div>
-          <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <button type="submit">Login</button>
-          </div>
+          <button type="submit" style={{marginTop: "4px"}}>Login</button>
         </form>
       </div>
     );

@@ -1,26 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router, Redirect } from "react-router-dom";
 import TodoListContainer from "./TodoList/TodoListContainer";
 import Login from "./LoginInformation/Login";
 import Navbar from "./navigation/navbar";
 import Register from "./LoginInformation/Register";
 import * as serviceWorker from "./serviceWorker";
 
-const requireAuthentication = () => {
-  if(!!localStorage.token) {
-    return;
-  } else {
-    window.location.replace("/signin")
-  }
-}
 const routing = (
   <Router>
     {!!localStorage.token && (
       <Navbar />
     )}
     <Switch>
-      <Route exact path="/" component={TodoListContainer} onEnter={requireAuthentication} />
+      <Route
+        exact
+        path="/"
+        render={() => (
+          !!localStorage.token ? (
+            <TodoListContainer />
+          ) : (
+            <Redirect to="/signin" />
+          )
+        )}
+      />
       <Route exact path="/register" component={Register} />
       <Route exact path="/signin" component={Login} />
     </Switch>

@@ -29,7 +29,14 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div
+        style={{
+          maxWidth: "400px",
+          padding: "80px 80px",
+          margin: "200px auto",
+          background: "#ebf1f6"
+        }}
+      >
         <div style={{ paddingLeft: "12px" }}>
           <h4>Register below</h4>
           <p>

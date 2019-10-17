@@ -38,12 +38,7 @@ getTodoList = async (req, res) => {
       return res.status(400).json({ success: false, error: err });
     }
 
-    if (!todoItems.length) {
-      return res
-        .status(404)
-        .json({ success: false, error: `Todo List not found` });
-    }
-    return res.status(200).json({ success: true, data: todoItems });
+    return res.status(200).json({ success: true, data: todoItems || [] });
   }).catch(err => console.log(err));
 };
 

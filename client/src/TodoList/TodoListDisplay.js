@@ -1,17 +1,24 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const TodoListDisplay = props => {
   return (
-    <Fragment>
-      {props.todoList.length === 0 ? (
-        <h3> You have no tasks to complete </h3>
+    <div
+      style={{
+        maxWidth: "400px",
+        padding: "80px 80px",
+        margin: "10px auto",
+        background: "#ebf1f6"
+      }}
+    >
+      {!!props.todoList && props.todoList.length === 0 ? (
+        <h3> Use the form below to add items to your List! </h3>
       ) : (
         <ul>
           {props.todoList.map(todoItem => {
             return (
-              <li>
+              <li key={todoItem._id}>
                 {todoItem.message} -- {todoItem.dueDate}{" "}
                 <FontAwesomeIcon
                   icon={faTrash}
@@ -23,7 +30,7 @@ const TodoListDisplay = props => {
           })}
         </ul>
       )}
-    </Fragment>
+    </div>
   );
 };
 

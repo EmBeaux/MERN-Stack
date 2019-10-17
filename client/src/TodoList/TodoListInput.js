@@ -7,6 +7,7 @@ const TodoListInput = props => {
       onChange={e => props.onChange(e)}
       placeholder={props.placeholder}
       style={{ width: props.width || "200px" }}
+      value={props.value}
     />
   );
 };

@@ -48,19 +48,12 @@ getTodoList = async (req, res) => {
 };
 
 deleteTodoItem = async (req, res) => {
-  console.log(TodoItem.find({_id: req.params.id}))
-  await TodoItem.findOneAndDelete({ _id: req.params.id }, (err, todoItem) => {
+  await TodoItem.findOneAndDelete({ _id: req.params.id }, (err) => {
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
 
-    if (!todoItem) {
-      return res
-        .status(404)
-        .json({ success: false, error: `TodoItem not found` });
-    }
-
-    return res.status(200).json({ success: true, data: todoItem });
+    return res.status(200).json({ success: true });
   }).catch(err => console.log(err));
 };
 

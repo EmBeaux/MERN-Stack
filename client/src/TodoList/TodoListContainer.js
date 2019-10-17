@@ -8,8 +8,7 @@ class App extends Component {
     todoList: []
   };
 
-  async componentDidMount() {
-    // this.getCurrentUser();
+  componentDidMount() {
     this.getTodoList();
   }
 
@@ -34,6 +33,18 @@ class App extends Component {
       });
   };
 
+  deleteTodoItem = (todoItem) => {
+    axios
+      .delete(`http://localhost:3001/api/todoItem/${todoItem._id}`, {
+        todoItem: todoItem
+      })
+      .then(res => {
+        this.setState({
+          todoList: this.state.todoList.filter(item => item._id !== todoItem._id)
+        });
+      });
+  };
+
   render() {
     const { todoList } = this.state;
 
@@ -41,7 +52,7 @@ class App extends Component {
       <div>
         <div style={{ marginLeft: "4px" }}>
           <h1>Task List</h1>
-          <TodoListDisplay todoList={todoList} />
+          <TodoListDisplay todoList={todoList} deleteTodoItem={this.deleteTodoItem} />
         </div>
         <form
           style={{ padding: "10px" }}

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import setAuthToken from "../utils/SetAuthToken"
+import setAuthToken from "../utils/SetAuthToken";
 
 class Login extends Component {
   constructor() {
@@ -11,21 +11,22 @@ class Login extends Component {
     };
   }
 
-  onChange = e => {
+  onChange(e) {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  loginUser = () => {
-    debugger
+  loginUser() {
     axios
-      .post("/api/signin", {email: this.state.email, password: this.state.password})
+      .post("/api/signin", {
+        email: this.state.email,
+        password: this.state.password
+      })
       .then(res => {
         const { token } = res.data;
-        // Set token to Auth header
         setAuthToken(token);
-        console.log(token)
-      })
+      });
   };
+
   render() {
     return (
       <div>
@@ -36,37 +37,31 @@ class Login extends Component {
           </p>
         </div>
         <form
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault();
             this.loginUser();
           }}
         >
           <div style={{ display: "flex", flexDirection: "column" }}>
+            <label htmlFor="email">Email</label>
             <input
-              onChange={this.onChange}
+              onChange={(e) => this.onChange(e)}
               value={this.state.email}
-              error={this.state.errors.email}
               id="email"
               type="email"
-            />
-            <label htmlFor="email">Email</label>
-          </div>
-          <div className="input-field col s12">
-            <input
-              onChange={this.onChange}
-              value={this.state.password}
-              error={this.state.errors.password}
-              id="password"
-              type="password"
+              style={{ width: "200px" }}
             />
             <label htmlFor="password">Password</label>
+            <input
+              onChange={(e) => this.onChange(e)}
+              value={this.state.password}
+              id="password"
+              type="password"
+              style={{ width: "200px" }}
+            />
           </div>
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
-            <button
-              type="submit"
-            >
-              Login
-            </button>
+            <button type="submit">Login</button>
           </div>
         </form>
       </div>

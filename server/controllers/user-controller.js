@@ -74,7 +74,16 @@ loginUser = (req, res) => {
   });
 };
 
+currentUser = (req, res) => {
+  if(!!req.query.token) {
+    res.status(200).json({ currentUser: jwt.decode(req.query.token.split(" ")[1], keys.secretOrKey) })
+  } else {
+    res.status(404).json({ errors: "There is no current user" })
+  }
+};
+
 module.exports = {
   createUsers,
-  loginUser
+  loginUser,
+  currentUser
 };

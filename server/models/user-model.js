@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const TodoItem = new Schema(
+  {
+    message: { type: [String], required: true },
+    dueDate: { type: [String], required: true }
+  },
+  { timestamps: true }
+);
+
 const User = new Schema({
   name: {
     type: String,
@@ -17,6 +25,10 @@ const User = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  todoList: {
+    type: [TodoItem],
+    default: []
   }
 });
 

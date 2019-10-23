@@ -5,7 +5,8 @@ import axios from "axios";
 
 class App extends Component {
   state = {
-    todoList: []
+    todoList: [],
+    editing: false
   };
 
   componentDidMount() {
@@ -34,6 +35,33 @@ class App extends Component {
       });
   };
 
+  updateTodoItem = (message, dueDate, id) => {
+    axios
+      .put(`http://localhost:3001/api/todoItem/${id}`, {
+        message: message,
+        dueDate: dueDate,
+        editing: false
+      })
+      .then(res => {
+        const updatedTodoList = this.state.todoList.filter(todoItem => todoItem._id !== id)
+        this.setState({
+          todoList: updatedTodoList.concat(res.data.todoItem),
+          message: "",
+          dueDate: "",
+          editingId: null
+        });
+      });
+  };
+
+  onUpdateTodoItem = todoItem => {
+    this.setState({
+      editingId: todoItem._id,
+      message: todoItem.message,
+      dueDate: todoItem.dueDate,
+      editing: true
+    })
+  };
+
   deleteTodoItem = todoItem => {
     axios
       .delete(`http://localhost:3001/api/todoItem/${todoItem._id}`, {
@@ -57,13 +85,17 @@ class App extends Component {
           <TodoListDisplay
             todoList={todoList}
             deleteTodoItem={this.deleteTodoItem}
+            onUpdateTodoItem={this.onUpdateTodoItem}
           />
         </div>
         <form
           style={{ padding: "10px" }}
           onSubmit={e => {
             e.preventDefault();
-            this.createTodoItem(this.state.message, this.state.dueDate);
+            this.state.editing
+              ? this.updateTodoItem(this.state.message, this.state.dueDate, this.state.editingId)
+              : this.createTodoItem(this.state.message, this.state.dueDate)
+
           }}
         >
           <div

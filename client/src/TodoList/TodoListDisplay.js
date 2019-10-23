@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const TodoListDisplay = props => {
   return (
@@ -23,6 +23,11 @@ const TodoListDisplay = props => {
                 <FontAwesomeIcon
                   icon={faTrash}
                   onClick={() => props.deleteTodoItem(todoItem)}
+                  style={{ cursor: "pointer", marginLeft: "4px" }}
+                />
+                <FontAwesomeIcon
+                  icon={faEdit}
+                  onClick={() => props.onUpdateTodoItem(todoItem)}
                   style={{ cursor: "pointer", marginLeft: "4px" }}
                 />
               </li>

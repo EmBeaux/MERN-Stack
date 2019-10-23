@@ -5,14 +5,10 @@ const keys = require("../config/keys");
 
 createTodoItem = (req, res) => {
   const body = req.body;
-  console.log(req.body.token);
   const user = jwt.decode(req.body.token.split(" ")[1], keys.secretOrKey);
-  console.log(user);
 
   body.user_id = user.id;
   delete body.token;
-
-  console.log(body);
 
   if (!body || !body.message || (!body.dueDate && !body.user_id)) {
     return res.status(400).json({
@@ -67,8 +63,32 @@ deleteTodoItem = async (req, res) => {
   }).catch(err => console.log(err));
 };
 
+updateTodoItem = async (req, res) => {
+  todoItem = await TodoItem.findById(req.params.id);
+  if (!todoItem) {
+    return res.status(400).json({
+      success: false,
+      error: "You must provide a valid ID"
+    });
+  }
+
+  if (!req.body || !req.body.message || !req.body.dueDate) {
+    return res.status(400).json({
+      success: false,
+      error: "You must provide a message and due date"
+    });
+  }
+  TodoItem.updateOne({ "_id": req.params.id }, {$set: {"message": req.body.message, "dueDate": req.body.dueDate}}, () => {
+    return res.status(201).send({
+      success: true,
+      todoItem: {_id: req.body._id, message: req.body.message, dueDate: req.body.dueDate}
+    });
+  });
+};
+
 module.exports = {
   createTodoItem,
   deleteTodoItem,
-  getTodoList
+  getTodoList,
+  updateTodoItem
 };
